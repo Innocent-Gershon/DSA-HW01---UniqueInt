@@ -1,65 +1,80 @@
+import os
 import time
+import tracemalloc
 
 class UniqueInt:
     def __init__(self):
-        # Support for integers from -1023 to 1023 → index 0 to 2046
-        self.offset = 1023
-        self.seen = [False] * 2047
-        self.unique_values = []
+        self.seen = [False] * 2047  # -1023 to 1023 mapped to 0–2046
+        self.unique_numbers = []
 
-    def is_valid_line(self, line):
-        line = line.strip()
-        if not line:
-            return False
-        parts = line.split()
-        if len(parts) != 1:
-            return False
-        try:
-            int(parts[0])
-            return True
-        except ValueError:
-            return False
+    def map_index(self, num):
+        return num + 1023
 
-    def add_integer(self, number):
-        index = number + self.offset
-        if not self.seen[index]:
-            self.seen[index] = True
-            self.unique_values.append(number)
-
-    def bubble_sort(self):
-        n = len(self.unique_values)
+    def custom_sort(self, arr):
+        # Manual implementation of Bubble Sort
+        n = len(arr)
         for i in range(n):
             for j in range(0, n - i - 1):
-                if self.unique_values[j] > self.unique_values[j + 1]:
-                    self.unique_values[j], self.unique_values[j + 1] = self.unique_values[j + 1], self.unique_values[j]
+                if arr[j] > arr[j + 1]:
+                    arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+    def reset(self):
+        self.seen = [False] * 2047
+        self.unique_numbers = []
+
+    def is_valid_line(self, line):
+        tokens = line.strip().split()
+        if len(tokens) != 1:
+            return False
+        try:
+            int(tokens[0])
+            return True
+        except:
+            return False
 
     def processFile(self, inputFilePath, outputFilePath):
-        start_time = time.time()
-        with open(inputFilePath, 'r') as infile:
-            for line in infile:
-                if self.is_valid_line(line):
-                    number = int(line.strip())
-                    self.add_integer(number)
+        self.reset()
+        try:
+            with open(inputFilePath, 'r') as infile:
+                for line in infile:
+                    if not self.is_valid_line(line):
+                        continue
+                    num = int(line.strip())
+                    idx = self.map_index(num)
+                    if not self.seen[idx]:
+                        self.seen[idx] = True
+                        self.unique_numbers.append(num)
+        except FileNotFoundError:
+            print(f"❌ File not found: {inputFilePath}")
+            return
 
-        self.bubble_sort()
+        self.custom_sort(self.unique_numbers)
 
         with open(outputFilePath, 'w') as outfile:
-            for number in self.unique_values:
-                outfile.write(f"{number}\n")
-
-        end_time = time.time()
-        runtime = round((end_time - start_time) * 1000, 2)
-        memory_used = 2047 + (4 * len(self.unique_values))  # estimate: bool array + int values
+            for num in self.unique_numbers:
+                outfile.write(f"{num}\n")
 
         print(f"✅ Output written to: {outputFilePath}")
-        print(f"⏱️ Runtime: {runtime} ms")
-        print(f"📦 Estimated memory used: {memory_used} bytes")
 
-# Example usage
 if __name__ == "__main__":
-    input_path = "../../sample_inputs/sample_input_01.txt"
-    output_path = "../../sample_results/sample_input_01.txt_results.txt"
+    import_path = os.path.abspath(os.path.join(__file__, "../../sample_inputs"))
+    export_path = os.path.abspath(os.path.join(__file__, "../../sample_results"))
 
-    unique_ints = UniqueInt()
-    unique_ints.processFile(input_path, output_path)
+    processor = UniqueInt()
 
+    for filename in os.listdir(import_path):
+        if filename.endswith(".txt"):
+            input_file = os.path.join(import_path, filename)
+            result_file = os.path.join(export_path, f"{filename}_results.txt")
+
+            tracemalloc.start()
+            start_time = time.time()
+
+            processor.processFile(input_file, result_file)
+
+            end_time = time.time()
+            current, _ = tracemalloc.get_traced_memory()
+            tracemalloc.stop()
+
+            print(f"⏱️ Runtime: {round((end_time - start_time) * 1000, 2)} ms")
+            print(f"📦 Estimated memory used: {current} bytes\n")
