@@ -57,8 +57,9 @@ class UniqueInt:
 
 # Example usage
 if __name__ == "__main__":
-    input_path = "/mnt/data/dsa/hw01/sample_inputs/sample_input_01.txt"
-    output_path = "/mnt/data/dsa/hw01/sample_results/sample_input_01.txt_results.txt"
+    input_path = "../../sample_inputs/sample_input_01.txt"
+    output_path = "../../sample_results/sample_input_01.txt_results.txt"
 
     unique_ints = UniqueInt()
     unique_ints.processFile(input_path, output_path)
+
