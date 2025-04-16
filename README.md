@@ -1,76 +1,48 @@
-# DSA-HW01---UniqueInt
+# 🧠 DSA Homework 01 — Unique Integers Processor
 
-🧾 Instructions to Run the Program
-This program reads all .txt input files from the sample_inputs/ directory, removes duplicates, skips invalid and repeated entries, sorts the integers manually (without using built-in functions), and writes the sorted unique integers into the sample_results/ directory.
+## 📌 Assignment Objective
 
-📁 Project Folder Structure
-Make sure your project is organized as follows:
+This program reads a list of integers from an input text file, removes duplicate values, sorts them in ascending order, and saves the result to an output file. It is designed to improve your understanding of data structures and algorithms, especially set operations and sorting techniques.
 
-css
-Copy
-Edit
-/dsa/hw01/
-│
-├── code/
-│   └── src/
-│       └── unique_int.py         ← Main program file
-│
-├── sample_inputs/                ← All  input .txt files here
-│   ├── sample_input_01.txt
-│   └── sample_input_02.txt
-│
-└── sample_results/               ← This is where result files will be saved
-⚙️ How to Run the Program
-Open your terminal (or PowerShell on Windows).
+---
 
-Navigate to the folder containing unique_int.py:
+## 📁 Folder Structure
 
-bash
-Copy
-Edit
-cd path/to/dsa/hw01/code/src
-For example:
-
-bash
-Copy
-Edit
-cd "C:\Users\YourName\Desktop\dsa\hw01\code\src"
-Run the program:
-
-bash
-Copy
-Edit
-python unique_int.py
-✅ You’ll see success messages like:
+dsahw01/ ├── sample_inputs/ │ └── sample_input_01.txt # Place your input files here ├── sample_results/ │ └── sample_input_01.txt_results.txt # Outputs will be saved here ├── Code/ │ └── src/ │ └── uniqueInt.js # JavaScript source code └── README.md # This file
 
 yaml
 Copy
 Edit
-✅ Output written to: ../../sample_results/sample_input_01.txt_results.txt
-⏱️ Runtime: 1.0 ms
-📦 Estimated memory used: 2075 bytes
-🧪 How It Works
-Reads from: All .txt files in sample_inputs/
 
-Validates each line: Skips lines with:
+---
 
-More than one number
+## ▶️ How to Run the Program
 
-Empty lines
+### Step 1: Prerequisites
 
-Non-integer values
+- Ensure you have **Node.js** installed.  
+You can download it from [https://nodejs.org](https://nodejs.org)
 
-Removes duplicates
+To verify installation:
 
-Sorts manually using Bubble Sort (no built-in .sort() or sorted())
+```bash
+node -v
+Step 2: Setup Files
+Place your input file inside the sample_inputs/ folder.
+Example filename: sample_input_01.txt
 
-Writes output to sample_results/ with filenames like:
+Step 3: Run the Program
+Navigate to the Code/src/ directory in your terminal and run:
 
+bash
 Copy
 Edit
-sample_input_01.txt_results.txt
-📌 Notes
-The program handles integers in the range of -1023 to 1023 only.
+node uniqueInt.js
+Step 4: View Results
+The program will:
 
-You can add as many .txt files as you want into the sample_inputs/ folder. The program will process each one automatically.
+Read from ../../sample_inputs/sample_input_01.txt
 
+Output results to ../../sample_results/sample_input_01.txt_results.txt
+
+Display runtime and estimated memory used
